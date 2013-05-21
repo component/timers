@@ -1,0 +1,24 @@
+<html>
+<head>
+  <title>Timers</title>
+</head>
+<body>
+  <script src="build/build.js"></script>
+  <script>
+    var Timers = require('timers');
+    var timers = new Timers;
+
+    timers.timeout(function(){
+      console.log('timeout');
+    }, 1500);
+
+    timers.timeout(function(){
+      console.log('timeout');
+    }, 2000);
+
+    timers.timeout(function(){
+      console.log('timeout');
+    }, 3000);
+  </script>
+</body>
+</html>
