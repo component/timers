@@ -1,7 +1,7 @@
 
 # timers
 
-  Timer management
+  Timer management to clear large batches of timers.
 
 ## Installation
 
