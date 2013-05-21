@@ -2,7 +2,7 @@
   "name": "timers",
   "repo": "component/timers",
   "description": "Timer management",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "keywords": ["timer", "timers", "interval", "timeout"],
   "dependencies": {},
   "development": {},
