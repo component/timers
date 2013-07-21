@@ -1,4 +1,3 @@
-
 /**
  * Global reference.
  */
@@ -82,11 +81,17 @@ Timers.prototype.resume = function(id){
 /**
  * Clear all timers.
  *
+ * @param {Number} optional id
  * @api public
  */
 
-Timers.prototype.clear = function(){
-  for(id in this.timers){
+Timers.prototype.clear = function(id){
+  if(id){
+   clearTimeout(id);
+   delete this.timers[id];
+   return;
+  }
+  for(var id in this.timers){
     clearTimeout(this.timers[id]);
   }
   this.timers = {};
