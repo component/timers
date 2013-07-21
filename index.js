@@ -19,9 +19,11 @@ module.exports = Timers;
 
 function Timers(ids) {
   var timers = this.timers = {};
-  ids.forEach(function(id){
-    timers[id] = null;
-  });
+  if (ids) {
+    ids.forEach(function(id){
+      timers[id] = null;
+    });
+  }
 }
 
 /**
@@ -59,7 +61,7 @@ Timers.prototype.interval = function(fn, ms){
 
 Timers.prototype.pause = function(id){
   var timer = this.timers[id];
-  if(!timer) return;
+  if (!timer) return;
   clearTimeout(id);
   timer.remaining -= Date.now() - timer.start;
 }
@@ -73,7 +75,7 @@ Timers.prototype.pause = function(id){
  
 Timers.prototype.resume = function(id){
   var timer = this.timers[id];
-  if(!timer) return;
+  if (!timer) return;
   timer.start = Date.now();
   global[timer.type](cb, timer.remaining);
 }
@@ -86,12 +88,12 @@ Timers.prototype.resume = function(id){
  */
 
 Timers.prototype.clear = function(id){
-  if(id){
+  if (id) {
    clearTimeout(id);
    delete this.timers[id];
    return;
   }
-  for(var id in this.timers){
+  for (var id in this.timers) {
     clearTimeout(this.timers[id]);
   }
   this.timers = {};
