@@ -1,4 +1,3 @@
-
 # timers
 
   Timer management to clear large batches of timers.
@@ -49,6 +48,12 @@ setTimeout(function(){
 ### Timers.clear()
 
   Clear all timers.
+
+### Timers.pause(id:Number)
+  Pause timer `id`
+
+### Timers.resume(id:Number)
+  Resume timer `id`
 
 ## License
 
