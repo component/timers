@@ -1,6 +1,6 @@
 # timers
 
-  Timer management to clear large batches of timers.
+  Timer management to clear large batches of timers with pause and resume functionality.
 
 ## Installation
 
@@ -50,10 +50,10 @@ setTimeout(function(){
   Clear all timers.
 
 ### Timers.pause(id:Number)
-  Pause timer `id`
+  Pause timer `id`.
 
 ### Timers.resume(id:Number)
-  Resume timer `id`
+  Resume timer `id`.
 
 ## License
 
