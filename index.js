@@ -108,13 +108,12 @@ Timers.prototype.clear = function(id){
  */
  
 function create(type, fn, ms){
-  var now = Date.now();
   var id = global[type](fn, ms);
   var details = {
     type: type,
     fn: fn,
-    start: now,
-    remaining: now
+    start: Date.now(),
+    remaining: ms
   }
   this.timers[id] = details;
   return id;
