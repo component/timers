@@ -1,3 +1,8 @@
+/**
+ * Global reference.
+ */
+ 
+var global = this;
 
 /**
  * Expose `Timers`.
@@ -13,7 +18,10 @@ module.exports = Timers;
  */
 
 function Timers(ids) {
-  this.ids = ids || [];
+  var timers = this.timers = {};
+  ids.forEach(function(id){
+    timers[id] = null;
+  });
 }
 
 /**
@@ -26,9 +34,7 @@ function Timers(ids) {
  */
 
 Timers.prototype.timeout = function(fn, ms){
-  var id = setTimeout(fn, ms);
-  this.ids.push(id);
-  return id;
+  return create('setTimeout', fn, ms);
 };
 
 /**
@@ -41,18 +47,74 @@ Timers.prototype.timeout = function(fn, ms){
  */
 
 Timers.prototype.interval = function(fn, ms){
-  var id = setInterval(fn, ms);
-  this.ids.push(id);
-  return id;
+  return create('setInterval', fn, ms);
 };
 
 /**
- * Clear all timers.
- *
+ * Pause timer.
+ * 
+ * @param {Number} timer id
  * @api public
  */
 
-Timers.prototype.clear = function(){
-  this.ids.forEach(clearTimeout);
-  this.ids = [];
+Timers.prototype.pause = function(id){
+  var timer = this.timers[id];
+  if(!timer) return;
+  clearTimeout(id);
+  timer.remaining -= Date.now() - timer.start;
+}
+
+/**
+ * Resume timer.
+ * 
+ * @param {Number} timer id
+ * @api public
+ */
+ 
+Timers.prototype.resume = function(id){
+  var timer = this.timers[id];
+  if(!timer) return;
+  timer.start = Date.now();
+  global[timer.type](cb, timer.remaining);
+}
+
+/**
+ * Clear all timers or `id`.
+ *
+ * @param {Number} optional id
+ * @api public
+ */
+
+Timers.prototype.clear = function(id){
+  if(id){
+   clearTimeout(id);
+   delete this.timers[id];
+   return;
+  }
+  for(var id in this.timers){
+    clearTimeout(this.timers[id]);
+  }
+  this.timers = {};
 };
+
+
+/**
+ * Create timer.
+ * 
+ * @param {String} setTimeout|setInterval
+ * @param {Function} fn
+ * @param {Number} ms
+ * @api private
+ */
+ 
+function create(type, fn, ms){
+  var id = global[type](fn, ms);
+  var details = {
+    type: type,
+    fn: fn,
+    start: Date.now(),
+    remaining: ms
+  }
+  this.timers[id] = details;
+  return id;
+}
