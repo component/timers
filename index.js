@@ -79,7 +79,7 @@ Timers.prototype.resume = function(id){
 }
 
 /**
- * Clear all timers.
+ * Clear all timers or `id`.
  *
  * @param {Number} optional id
  * @api public
