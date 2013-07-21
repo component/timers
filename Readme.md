@@ -45,9 +45,9 @@ setTimeout(function(){
 
   Add interval `fn`.
 
-### Timers.clear()
+### Timers.clear(id:Number)
 
-  Clear all timers.
+  Clear all timers or `id`.
 
 ### Timers.pause(id:Number)
   Pause timer `id`.
